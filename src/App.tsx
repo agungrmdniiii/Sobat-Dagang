@@ -478,7 +478,7 @@ export default function App() {
             <div className="inline-flex p-4 bg-emerald-500 rounded-2xl mb-6 shadow-lg shadow-emerald-500/20">
               <Store size={40} />
             </div>
-            <h1 className="text-4xl font-black tracking-tighter text-slate-900">Sobat<span className="bg-emerald-500 bg-clip-text text-transparent">Dagang</span></h1>
+            <h1 className="text-4xl font-black tracking-tighter text-white">SobatDagang</h1>
             <p className="text-emerald-500/80 mt-3 text-[10px] font-black uppercase tracking-[0.3em]">Partner Bisnis Digital UMKM</p>
           </div>
           <form onSubmit={handleLogin} className="p-10 space-y-8">
@@ -499,8 +499,23 @@ export default function App() {
             <Button type="submit" className="w-full py-4 text-lg" disabled={loading}>
               {loading ? 'Memproses...' : 'Login Ke Sistem'}
             </Button>
-            <div className="pt-4 text-center">
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">© 2024 SobatDagang Digital</p>
+            <div className="pt-6 border-t border-slate-50 space-y-4">
+              <div className="bg-slate-50 rounded-2xl p-4 space-y-2">
+                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 text-center">Demo Access</p>
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="text-[10px] bg-white border border-slate-200 p-2 rounded-xl">
+                    <span className="font-bold text-emerald-600 block">ADMIN</span>
+                    <span className="text-slate-500">U: admin / P: admin123</span>
+                  </div>
+                  <div className="text-[10px] bg-white border border-slate-200 p-2 rounded-xl">
+                    <span className="font-bold text-emerald-600 block">KASIR</span>
+                    <span className="text-slate-500">U: kasir / P: kasir123</span>
+                  </div>
+                </div>
+              </div>
+              <div className="text-center">
+                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">© 2024 Agung Ramdani Project</p>
+              </div>
             </div>
           </form>
         </motion.div>

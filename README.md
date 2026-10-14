@@ -13,94 +13,207 @@
 [![Motion](https://img.shields.io/badge/Motion-v12-f43f5e?style=flat-square)](https://motion.dev/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 
-*Aplikasi web Point of Sale (POS) dan manajemen inventori toko ritel/sembako yang cepat, elegan, dan siap pakai. Dilengkapi kontrol hak akses kasir/admin, analitik penjualan, sistem onboarding interaktif, serta mode latihan untuk pelatihan staf kasir baru.*
+*Aplikasi web Point of Sale (POS) dan manajemen inventori toko ritel/sembako yang cepat, elegan, dan siap pakai. Dirancang khusus untuk efisiensi meja kasir tinggi, dilengkapi kontrol hak akses (RBAC), analitik keuangan, onboarding interaktif, serta mode latihan sandbox untuk kasir baru.*
 
 </div>
 
 ---
 
-## 🌟 Highlight Fitur
+## 📐 Gambaran Sistem & Arsitektur
 
-### 1. ⚡ Kasir POS (Point of Sale) Cerdas
-- **Pencarian Cepat & Scan Barcode**: Input pencarian terintegrasi barcode scanner USB/kamera. Tekan `/` untuk langsung fokus dan tekan Enter untuk menambahkan produk otomatis saat kode SKU cocok.
-- **Filter Kategori Dinamis**: Chip kategori produk sembako (Beras, Minyak, Gula, Kopi, Mie Instan, dll.) dengan palet warna pastel yang ramah mata.
-- **Umpan Balik Visual Interaktif**: Efek kartu berkedip halus, animasi ikon terbang ke keranjang belanja, dan badge jumlah membal saat produk ditambahkan.
-- **Kontrol Keranjang Lengkap**: 
-  - Stepper jumlah item dengan fitur *hold-to-repeat*.
-  - Catatan khusus per item barang.
-  - *Swipe* ke kiri untuk menghapus item dengan jendela **Undo 5 detik**.
-  - Tombol kosongkan keranjang yang aman dengan konfirmasi modal.
-- **Tahan Transaksi (Hold Cart - F2)**: Simpan sementara keranjang pelanggan yang sedang mengantre untuk melayani pembeli lain terlebih dahulu, lalu lanjutkan kembali kapan saja.
-- **Proses Pembayaran Cepat**:
-  - Format angka Rupiah otomatis tanpa spinner input standar.
-  - Pilihan **Uang Cepat** cerdas: tombol *Uang Pas* dan pecahan uang terdekat di atas total belanja.
-  - Penghitungan uang kembalian *realtime* beranimasi Count-Up.
-  - Dukungan metode pembayaran **Tunai** dan **QRIS** (panduan verifikasi mutasi manual).
-- **Struk Digital & Cetak**: Struk transaksi siap cetak via printer thermal browser (`Ctrl+P` / tombol Cetak).
+SobatDagang dibangun dengan arsitektur **client-first reactive SPA** yang tangguh, modular, dan bebas lag. Seluruh alur data dikelola secara deterministik dengan mekanisme isolasi sesi latihan (*Practice Mode*) untuk menjamin integritas data toko riil.
 
-### 2. 🔐 Kontrol Peran & Keamanan Akun (RBAC)
-- **Role-Based Access Control**:
-  - **Admin**: Akses penuh ke Dashboard, Inventori, Laporan Penjualan, Manajemen Pengguna, dan Pengaturan Sistem.
-  - **Kasir**: Akses fokus ke POS Kasir dan menu **Riwayat Saya** (daftar transaksi shift hari ini, buka struk ulang, dan ringkasan tutup kasir tanpa membuka data omzet rahasia toko).
-- **Enkripsi Kata Sandi (Hash PBKDF2/SHA-256)**: Password disimpan dalam bentuk hash aman menggunakan Web Crypto API.
-- **Indikator Kekuatan Password**: Evaluasi real-time saat pembuatan kata sandi (Lemah, Sedang, Kuat, Sangat Kuat).
-- **Reset Password Wajib**: Admin dapat mereset akun staf dengan password sementara; pengguna diwajibkan membuat password baru saat pertama kali login.
-- **Proteksi Admin Terakhir**: Sistem melarang admin menurunkan hak akses atau menghapus akun miliknya sendiri jika merupakan satu-satunya admin aktif.
+### 1. Diagram Arsitektur Komponen & Alur Data (Mermaid)
 
-### 3. 📦 Manajemen Inventori & Stok
-- **Master Data Produk**: Kode SKU, nama barang, kategori, satuan (pcs, kg, liter, dll.), harga beli (modal), harga jual, dan foto produk/avatar inisial.
-- **Peringatan Stok Minimum**: Status persediaan otomatis (*Aman*, *Hampir Habis*, atau *Habis*) dengan batas restok yang dapat disesuaikan.
-- **Edit Stok Cepat**: Stepper penyesuaian stok langsung dari tabel/kartu disertai tombol pemulihan (*Undo*).
-- **Draf Otomatis & Kuota Penyimpanan**: Menyimpan draf penambahan produk otomatis dan memantau sisa kuota `localStorage` browser.
-- **Ekspor CSV**: Unduh seluruh daftar barang inventori ke format spreadsheet `.csv`.
+```mermaid
+flowchart TB
+    subgraph Pengguna["👤 Pengguna & Peran (RBAC)"]
+        Kasir["👨‍💼 Kasir\n(POS, Riwayat Shift, Struk)"]
+        Admin["👑 Administrator\n(Akses Penuh, Stok, Laporan, User)"]
+    end
 
-### 4. 📊 Laporan & Analitik Penjualan (Khusus Admin)
-- **Filter Periode Fleksibel**: Hari Ini, 7 Hari Terakhir, 30 Hari, dan Rentang Tanggal Kustom (*Date Range Picker* dengan preset cepat).
-- **Kartu Ringkasan KPI**: Total Omzet, Total Transaksi, Laba Bersih Estimasi, dan Rata-rata Nilai Keranjang (AOV).
-- **Grafik Interaktif Recharts**: Visualisasi omzet harian dan diagram persentase metode pembayaran (Tunai vs QRIS).
-- **Filter Riwayat Transaksi**: Cari nomor invoice, kasir yang bertugas, atau rincian item barang.
-- **Ekspor CSV Laporan**: Unduh rekap pembukuan penjualan lengkap ke file `.csv`.
+    subgraph Security["🔐 Lapisan Keamanan & Autentikasi"]
+        AuthContext["Auth State & Session Guard"]
+        CryptoEngine["Web Crypto API\n(PBKDF2 + SHA-256 Hash & Salt)"]
+        ForceReset["Force Password Reset Gateway"]
+        AuthContext <--> CryptoEngine
+        AuthContext --> ForceReset
+    end
 
-### 5. 🎓 Sistem Onboarding & Pusat Bantuan
-- **Modal Sambutan Pertama Login (`WelcomeModal`)**: Sambutan interaktif personal dengan 3 poin ringkas sesuai peran pengguna.
-- **Tur Interaktif Mandiri (`GuidedTour`)**:
-  - Spotlight berlubang dinamis menggunakan SVG mask tanpa dependensi library eksternal yang berat.
-  - Popover pemandu otomatis menyesuaikan posisi layar dengan navigasi keyboard (`Enter`, panah, `Esc`).
-  - Tur otomatis berpindah menu halaman jika langkah berikutnya berada di modul berbeda.
-  - Tur khusus Kasir (8 langkah alur transaksi) dan Admin (11 langkah navigasi toko).
-- **Checklist "Mulai di Sini"**: Widget mengambang di pojok kanan bawah yang otomatis mencentang tugas awal saat pengguna menyelesaikan aksi riil.
-- **Pusat Bantuan (`HelpCenterDrawer`)**:
-  - Panduan langkah demi langkah bergaya accordion dengan pencarian live kata kunci.
-  - Tabel pintasan keyboard lengkap.
-  - FAQ toko dan kontak darurat supervisor.
-- **Mode Latihan (Practice Mode)**: Salinan data sementara yang memungkinkan kasir baru mencoba transaksi jual-beli dan perubahan stok tanpa memengaruhi database asli toko.
+    subgraph UI_Modules["🖥️ Modul Antarmuka (UI Core)"]
+        POSModule["🛒 POS Kasir\n(Scanner /, Hold F2, Quick Cash)"]
+        InvModule["📦 Inventori & SKU\n(Stok Minimum, Restok, CSV)"]
+        RepModule["📊 Laporan & Omzet\n(KPI, Recharts, Laba, AOV)"]
+        UserModule["👥 Kelola Pengguna\n(Tambah Kasir, Reset Sandi)"]
+        GlobalTools["⚡ Command Palette (Ctrl+K)\n& Pintasan Keyboard"]
+    end
+
+    subgraph Onboarding["🎓 Tutorial & Onboarding Engine"]
+        GuidedTour["Spotlight Tour (SVG Mask)"]
+        Checklist["Checklist Widget 'Mulai di Sini'"]
+        HelpDrawer["Pusat Bantuan Drawer (?)"]
+        PracticeSandbox["Mode Latihan (Sandbox In-Memory)"]
+    end
+
+    subgraph Hardware_IO["🖨️ Integrasi Perangkat & I/O"]
+        BarcodeScan["Barcode Scanner (USB / Wedge)"]
+        ThermalPrint["Printer Struk Thermal (Browser Print)"]
+        CSVExport["Export Engine (.csv spreadsheet)"]
+    end
+
+    subgraph Storage_Layer["💾 Lapisan Penyimpanan Data"]
+        StorageSwitcher{"Mode Latihan Aktif?"}
+        ProdDB[("🗄️ LocalStorage Produksi\n(Produk, Transaksi, Pengguna)")]
+        MemoryDB[("🧪 Temp Memory State\n(Data Uji Coba Terisolasi)")]
+    end
+
+    %% Hubungan
+    Kasir --> AuthContext
+    Admin --> AuthContext
+    AuthContext --> UI_Modules
+
+    POSModule <--> BarcodeScan
+    POSModule --> ThermalPrint
+    RepModule --> CSVExport
+    InvModule --> CSVExport
+
+    UI_Modules <--> Onboarding
+    UI_Modules <--> StorageSwitcher
+
+    StorageSwitcher -- "Tidak (Mode Normal)" --> ProdDB
+    StorageSwitcher -- "Ya (Mode Latihan)" --> MemoryDB
+```
+
+---
+
+### 2. Lapisan Arsitektur (Layer Breakdown)
+
+| Lapisan | Komponen Utama | Peran & Tanggung Jawab |
+| :--- | :--- | :--- |
+| **Presentation Layer** | React 19, Motion v12, Tailwind v4 | Antarmuka interaktif responsif, transisi micro-interactions, popover dinamis, dan rendering struk siap cetak. |
+| **Business Logic Layer** | React Hooks, State Orchestrator (`App.tsx`) | Pengelolaan keranjang belanja, kalkulasi pajak & kembalian, validasi transaksi, filter laporan harian/rentang tanggal. |
+| **Onboarding & Tutorial** | `src/features/onboarding/` | Spotlight tour berlubang dinamis (SVG cut-out), checklist tugas otomatis tersinkronisasi event riil, dan drawer bantuan pencarian live. |
+| **Security & RBAC** | `src/lib/crypto.ts`, `src/lib/permissions.ts` | Hashing PBKDF2 Web Crypto API standar industri, validasi sesi login, penguncian rute berdasarkan peran akun. |
+| **Data & Storage Layer** | Browser `localStorage` + Memory Sandbox | Penyimpanan lokal instan tanpa latency server, dilengkapi *switch toggle* yang mengisolasi transaksi saat mode latihan berjalan. |
+| **Device Integration** | Standard Browser APIs & Keyboard Wedge | Kompatibel langsung dengan barcode scanner USB plug-and-play dan printer kasir thermal 58mm/80mm tanpa driver tambahan. |
+
+---
+
+## ✨ Fitur-Fitur Utama
+
+SobatDagang dirancang secara menyeluruh untuk menjawab tantangan operasional harian toko ritel, minimarket, dan UMKM:
+
+### 1. ⚡ POS Kasir Super Cepat (High-Throughput Checkout)
+- **Fokus & Scan Seketika (<kbd>/</kbd>)**: Input pencarian langsung otomatis menangkap scan barcode scanner. Tekan <kbd>Enter</kbd> untuk memasukkan barang dengan SKU yang cocok ke keranjang.
+- **Tahan Transaksi / Hold Cart (<kbd>F2</kbd>)**: Simpan antrean keranjang pembeli yang ingin mengambil barang tambahan, layani pembeli berikutnya, lalu pulihkan keranjang sebelumnya kapan saja.
+- **Pilihan Uang Cepat (Quick Cash)**: Tombol cerdas otomatis menghitung nominal *Uang Pas* dan pecahan lembaran rupiah terdekat (Rp 10.000, Rp 20.000, Rp 50.000, Rp 100.000) di atas total belanja.
+- **Perhitungan Kembalian Real-Time**: Animasi *Count-Up* yang jelas dengan indikator warna hijau terang untuk meminimalkan salah hitung kasir.
+- **Dukungan Pembayaran Fleksibel**: Pilihan pembayaran **Tunai** dan **QRIS Dinamis** lengkap dengan panduan cek mutasi manual.
+- **Cetak Struk Transaksi**: Tata letak struk kasir yang rapi, teroptimasi untuk kertas thermal 58mm dan 80mm via dialog cetak browser (`Ctrl+P`).
+- **Undo Penghapusan Item**: Perlindungan salah klik dengan notifikasi toast undo 5 detik saat menghapus barang dari keranjang.
+
+### 2. 📦 Manajemen Inventori & Peringatan Stok
+- **Master Data Lengkap**: Kelola SKU unik, nama barang, kategori, satuan (pcs, botol, kg, pack), harga beli (modal), harga jual, dan margin keuntungan.
+- **Peringatan Stok Rendah Otomatis**: Klasifikasi status stok (*Aman*, *Hampir Habis*, dan *Habis*) berdasarkan ambang batas minimum masing-masing barang.
+- **Quick Stock Adjuster**: Tombol penyesuaian stok langsung (+/-) di tabel inventori tanpa perlu membuka modal formulir yang rumit.
+- **Ekspor Data (.CSV)**: Unduh seluruh basis data barang ke format spreadsheet Excel/CSV untuk keperluan audit stok fisik (*stock opname*).
+- **Auto-Draft & Storage Monitor**: Menyimpan draf input barang baru secara berkala agar data tidak hilang saat tab browser tidak sengaja tertutup.
+
+### 3. 📊 Laporan Penjualan & Analitik Bisnis (Khusus Admin)
+- **4 Kartu Metrik KPI Utama**:
+  - **Total Omzet**: Akumulasi nilai penjualan kotor dalam periode terpilih.
+  - **Total Transaksi**: Jumlah nota/struk yang berhasil diproses.
+  - **Estimasi Laba Bersih**: Keuntungan riil hasil selisih harga jual dan harga modal barang.
+  - **Rata-Rata Keranjang (AOV)**: Nilai rata-rata pengeluaran pelanggan per transaksi.
+- **Grafik Interaktif Recharts**: Grafik tren omzet harian dan diagram lingkaran persentase metode pembayaran (Tunai vs QRIS).
+- **Filter Fleksibel**: Pilihan preset cepat (Hari Ini, 7 Hari Terakhir, 30 Hari Terakhir) dan pemilih rentang tanggal kustom (*Date Range Picker*).
+- **Riwayat Penjualan Lengkap**: Filter berdasarkan nomor invoice, kasir yang bertugas, atau jenis barang, disertai tombol ekspor laporan CSV.
+
+### 4. 👨‍💼 Menu Khusus "Riwayat Saya" (Fokus Kasir)
+- Tampilan khusus kasir yang menjaga kerahasiaan total omzet toko.
+- Kasir dapat melihat daftar transaksi shift miliknya sendiri untuk hari berjalan.
+- Cetak ulang struk pelanggan jika diperlukan.
+- Tombol **Ringkasan Tutup Kasir**: Menampilkan rincian total uang tunai yang terkumpul di laci kasir dan total transaksi QRIS untuk memudahkan serah terima shift.
+
+### 5. 🔐 Kontrol Akses Berbasis Peran & Keamanan Akun (RBAC)
+- **Dua Peran Terpisah (Admin & Kasir)**: Hak akses menu dan data dibatasi secara ketat di tingkat rute dan komponen antarmuka.
+- **Enkripsi Sandi PBKDF2**: Kata sandi diamankan menggunakan standar kriptografi Web Crypto API (`crypto.subtle`) dengan salt unik per pengguna.
+- **Paksa Ganti Kata Sandi (Force Password Reset)**: Ketika admin mereset password staf ke sandi default/sementara, staf diwajibkan mengganti sandi baru saat pertama kali login.
+- **Perlindungan Akun Admin Terakhir**: Mencegah sistem terkunci dengan melarang penghapusan atau penurunan hak akses akun admin tunggal yang tersisa.
+
+### 6. 🎓 Sistem Onboarding & Mode Latihan (Practice Sandbox)
+- **Modal Sambutan Ramah (`WelcomeModal`)**: Sapaan personal nama staf beserta ringkasan 3 langkah penting sesuai perannya.
+- **Tur Interaktif Mandiri (`GuidedTour`)**: Efek spotlight sorotan elemen dinamis yang memandu langkah demi langkah tanpa mengganggu tata letak halaman.
+- **Checklist Mengambang ("Mulai di Sini")**: Widget checklist di sudut layar yang otomatis mencentang tugas saat aksi nyata berhasil dilakukan.
+- **Pusat Bantuan (`HelpCenterDrawer`)**: Akses cepat via tombol <kbd>?</kbd> berisi dokumentasi langkah demi langkah, FAQ, dan tabel pintasan keyboard.
+- **Mode Latihan Kasir (Sandbox)**: Kasir baru dapat berlatih input belanja, simulasi pembayaran, dan manipulasi stok tanpa takut merusak pembukuan toko asli.
+
+---
+
+## 🔄 Alur Operasional Sistem (System Workflows)
+
+### Alur 1: Transaksi Penjualan di Meja Kasir
+```text
+[Scan Barcode / Tekan '/'] 
+       │
+       ▼
+[Produk Masuk ke Keranjang] ──(Opsional: Tahan Antrean F2)──> [Lanjut Layani Pelanggan Lain]
+       │
+       ▼
+[Tekan Ctrl+Enter / Tombol Bayar]
+       │
+       ▼
+[Pilih Uang Cepat / Scan QRIS]
+       │
+       ▼
+[Hitung Kembalian Otomatis] ──> [Klik Proses Pembayaran]
+       │
+       ▼
+[Stok Otomatis Terpotong] ──> [Cetak Struk Thermal Ctrl+P] ──> [Selesai / Transaksi Baru]
+```
+
+### Alur 2: Serah Terima Shift & Tutup Kasir
+```text
+[Kasir Masuk Menu 'Riwayat Saya']
+       │
+       ▼
+[Klik 'Ringkasan Tutup Kasir']
+       │
+       ▼
+[Sistem Menampilkan: Total Kas Tunai & Total QRIS Shift Hari Ini]
+       │
+       ▼
+[Hitung Fisik Uang di Laci Kasir] ──> [Kesesuaian Saldo] ──> [Serah Terima ke Supervisor]
+```
 
 ---
 
 ## ⌨️ Daftar Pintasan Keyboard (Hotkeys)
 
-| Pintasan | Lokasi | Aksi |
+Efisiensi transaksi adalah kunci kepuasan antrean pelanggan. SobatDagang mendukung navigasi papan ketik penuh:
+
+| Pintasan | Lingkup | Fungsi & Deskripsi |
 | :--- | :--- | :--- |
-| <kbd>/</kbd> | POS Kasir / Inventori | Fokus cepat ke kolom pencarian / scan barcode |
-| <kbd>Ctrl</kbd> + <kbd>K</kbd> / <kbd>⌘</kbd> + <kbd>K</kbd> | Global | Buka **Command Palette** global |
+| <kbd>/</kbd> | POS Kasir / Inventori | Fokus langsung ke kolom pencarian / scan barcode |
+| <kbd>Ctrl</kbd> + <kbd>K</kbd> / <kbd>⌘</kbd> + <kbd>K</kbd> | Global | Buka **Command Palette** untuk lompat ke menu apa pun |
 | <kbd>Shift</kbd> + <kbd>/</kbd> (<kbd>?</kbd>) | Global | Buka **Pusat Bantuan & Tutorial** |
-| <kbd>Ctrl</kbd> + <kbd>Enter</kbd> | POS Kasir | Proses & buka modal konfirmasi pembayaran |
-| <kbd>F2</kbd> | POS Kasir | Tahan transaksi saat ini (*Hold Cart*) |
-| <kbd>N</kbd> | Inventori | Buka formulir Tambah Produk Baru |
-| <kbd>Esc</kbd> | Modal / Drawer | Tutup modal atau panel yang sedang aktif |
+| <kbd>Ctrl</kbd> + <kbd>Enter</kbd> | POS Kasir | Buka modal konfirmasi pembayaran seketika |
+| <kbd>F2</kbd> | POS Kasir | Simpan sementara transaksi (*Hold Cart*) / Pulihkan antrean |
+| <kbd>N</kbd> | Inventori | Buka formulir input produk baru |
+| <kbd>Esc</kbd> | Modal / Drawer | Tutup dialog, modal pembayaran, atau drawer bantuan |
 
 ---
 
-## 🛠️ Tech Stack & Arsitektur
+## 🛠️ Tech Stack & Spesifikasi Teknis
 
-- **Frontend Framework**: [React 19](https://react.dev/) + [TypeScript 5.8](https://www.typescriptlang.org/)
-- **Bundler & Build Tool**: [Vite 6](https://vitejs.dev/)
-- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
-- **Animasi & Transisi**: [Motion](https://motion.dev/) (Framer Motion v12) dengan dukungan `<MotionConfig reducedMotion="user">`
-- **Iconography**: [Lucide React](https://lucide.dev/)
-- **Data Visualization**: [Recharts](https://recharts.org/)
-- **State & Penyimpanan**: React Hooks + `localStorage` browser (tanpa perlu backend database rumit saat tahap deployment awal)
-- **Keamanan Kriptografi**: Web Crypto API (`crypto.subtle` PBKDF2 with SHA-256)
+- **Frontend Core**: [React 19](https://react.dev/) + [TypeScript 5.8](https://www.typescriptlang.org/)
+- **Build Engine**: [Vite 6](https://vitejs.dev/) (Fast HMR & Optimized Rollup Production Bundling)
+- **Utility Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
+- **Micro-Animations**: [Motion](https://motion.dev/) (Framer Motion v12) dengan kepatuhan `prefers-reduced-motion`
+- **Charts & Data Viz**: [Recharts](https://recharts.org/) (Grafik Omzet & Diagram Metode Pembayaran)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Security**: Web Crypto API native browser (`PBKDF2`, `SHA-256`, 100.000 iterasi)
+- **Storage**: Browser LocalStorage dengan skema terstruktur & *in-memory practice overlay*
 
 ---
 
@@ -108,9 +221,9 @@
 
 ### Prasyarat
 - [Node.js](https://nodejs.org/) versi 18.0 atau yang lebih baru
-- Package manager `npm`, `pnpm`, atau `yarn`
+- Package manager: `npm`, `pnpm`, atau `yarn`
 
-### Instalasi
+### Langkah Pemasangan
 
 1. **Clone repositori**:
    ```bash
@@ -123,56 +236,56 @@
    npm install
    ```
 
-3. **Jalankan server pengembangan**:
+3. **Jalankan development server**:
    ```bash
    npm run dev
    ```
-   Aplikasi akan berjalan di `http://localhost:3000`.
+   Aplikasi langsung dapat diakses di browser pada `http://localhost:3000`.
 
-4. **Build untuk produksi**:
+4. **Kompilasi & Build Produksi**:
    ```bash
    npm run build
    ```
-   Hasil build siap disajikan di folder `dist/`.
+   File hasil build yang siap di-deploy ke Vercel, Netlify, Cloudflare Pages, atau GitHub Pages akan tersedia di folder `dist/`.
 
 ---
 
-## 🔑 Akun Demo Pengujian
+## 🔑 Akun Demo Bawaan
 
-Saat pertama kali dibuka, sistem menyediakan akun bawaan untuk pengujian:
+Sistem telah dilengkapi akun bawaan untuk mempermudah evaluasi fitur:
 
-| Username | Password | Role | Akses Fitur |
+| Username | Password | Role | Lingkup Akses |
 | :--- | :--- | :--- | :--- |
 | `admin` | `admin123` | **Admin** | Akses penuh (Dashboard, POS, Inventori, Laporan, Pengguna) |
-| `kasir` | `kasir123` | **Kasir** | POS Penjualan & Riwayat Saya |
+| `kasir` | `kasir123` | **Kasir** | POS Penjualan, Hold Cart, dan Riwayat Saya |
 
-> 💡 *Catatan: Anda dapat membuat kasir baru atau mengubah kata sandi melalui menu Manajemen Pengguna (login sebagai Admin).*
+> 💡 *Tips Pengujian: Masuk sebagai `admin` untuk menambahkan produk baru, memantau grafik analitik, atau membuat akun kasir tambahan.*
 
 ---
 
-## 📁 Struktur Direktori
+## 📁 Struktur Direktori Proyek
 
 ```text
 ├── src/
 │   ├── components/
-│   │   ├── auth/          # Halaman Login & Ganti Password Wajib
-│   │   ├── dashboard/     # Kartu KPI, Grafik Omzet, Peringatan Stok
-│   │   ├── global/        # Sidebar, Topbar, Command Palette, Settings
-│   │   ├── inventory/     # Manajemen Produk, Form SKU, Edit Stok
-│   │   ├── motion/        # Komponen animasi reusable (PageTransition, CountUp)
-│   │   ├── pos/           # Modul Kasir, Keranjang, Modal Bayar, Riwayat Saya
-│   │   ├── reports/       # Laporan Penjualan, Filter Tanggal, Ekspor CSV
-│   │   ├── ui/            # Komponen dasar (Button, Modal, Drawer, Toast, Table)
-│   │   └── users/         # Manajemen Pengguna & Hak Akses
+│   │   ├── auth/          # Login, Sesi, & Ganti Password Wajib
+│   │   ├── dashboard/     # Kartu KPI, Grafik Recharts, Peringatan Stok
+│   │   ├── global/        # Sidebar, Topbar, Command Palette, Pengaturan
+│   │   ├── inventory/     # Manajemen SKU, Edit Stok Cepat, Ekspor CSV
+│   │   ├── motion/        # Reusable animations (PageTransition, CountUp, Stagger)
+│   │   ├── pos/           # Terminal Kasir, Keranjang, Modal Bayar, Riwayat Shift
+│   │   ├── reports/       # Laporan Omzet, Filter Tanggal, Ekspor CSV Keuangan
+│   │   ├── ui/            # UI Primitives (Button, Modal, Drawer, Toast, Table)
+│   │   └── users/         # Kelola Kredensial, Role Admin/Kasir, Reset Password
 │   ├── features/
-│   │   └── onboarding/    # GuidedTour, WelcomeModal, Checklist, HelpCenter, PracticeMode
+│   │   └── onboarding/    # GuidedTour (SVG Mask), WelcomeModal, Checklist, HelpDrawer
 │   ├── hooks/             # Custom hooks (useHotkeys, useLocalStorage, useUndoToast)
-│   ├── lib/               # Utility functions, Crypto hashing, Permission matrix
-│   ├── types.ts           # Definisi TypeScript interface & enum
-│   ├── constants.ts       # Data awal produk & kategori sembako
-│   ├── App.tsx            # Root application layout & state orchestrator
+│   ├── lib/               # Utility helper, Enkripsi PBKDF2 Web Crypto, Matriks RBAC
+│   ├── types.ts           # Definisi TypeScript interface data model
+│   ├── constants.ts       # Mock database awal sembako & kategori
+│   ├── App.tsx            # Main application layout, state orchestrator, & practice toggle
 │   └── main.tsx           # Entry point React
-├── public/                # Asset statis
+├── public/                # Favicon dan aset statis
 ├── package.json
 └── vite.config.ts
 ```
@@ -181,19 +294,19 @@ Saat pertama kali dibuka, sistem menyediakan akun bawaan untuk pengujian:
 
 ## 🤝 Kontribusi
 
-Kontribusi selalu diterima! Jika Anda menemukan bug atau memiliki ide perbaikan fitur:
+Kontribusi dari komunitas sangat dinantikan! Untuk berkontribusi:
 1. Fork repositori ini
-2. Buat branch fitur baru (`git checkout -b fitur/fitur-keren`)
-3. Commit perubahan Anda (`git commit -m 'Menambahkan fitur keren'`)
-4. Push ke branch (`git push origin fitur/fitur-keren`)
-5. Buat **Pull Request** baru
+2. Buat branch fitur Anda: `git checkout -b feature/fitur-baru`
+3. Commit perubahan: `git commit -m 'feat: menambahkan fitur baru'`
+4. Push ke branch: `git push origin feature/fitur-baru`
+5. Buat **Pull Request**
 
 ---
 
 ## 📄 Lisensi
 
-Proyek ini dirilis di bawah lisensi [MIT](LICENSE). Silakan gunakan, pelajari, dan modifikasi untuk kebutuhan usaha dagang Anda!
+Didistribusikan di bawah lisensi [MIT](LICENSE). Terbuka untuk digunakan, dimodifikasi, dan diterapkan pada usaha UMKM Anda.
 
 <div align="center">
-  Dibuat dengan ❤️ untuk kemajuan UMKM & Toko Kelontong Indonesia
+  Dibuat dengan ❤️ untuk kemajuan UMKM, Toko Kelontong, dan Ritel Modern Indonesia
 </div>

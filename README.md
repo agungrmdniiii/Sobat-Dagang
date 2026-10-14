@@ -2,14 +2,14 @@
 
 Sistem kasir digital *(Point of Sale)* dan manajemen stok barang modern berbasis web yang cepat, responsif, dan **100% siap pakai langsung di browser** tanpa ketergantungan server database eksternal.
 
-[![Live Demo](https://img.shields.io/badge/Demo-sobat--dagang.vercel.app-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://sobat-dagang.vercel.app/)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-sobat--dagang.vercel.app-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://sobat-dagang.vercel.app/)
 [![GitHub](https://img.shields.io/badge/GitHub-agungrmdniiii%2FSobat--Dagang-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/agungrmdniiii/Sobat-Dagang)
 
 ---
 
 ## 🌐 Live Preview & Akun Demo
 
-Aplikasi sudah dideploy dan dapat dicoba langsung secara interaktif:
+Aplikasi sudah aktif dan dapat diakses langsung secara interaktif di browser:
 
 👉 **[https://sobat-dagang.vercel.app/](https://sobat-dagang.vercel.app/)**
 
@@ -21,6 +21,46 @@ Aplikasi sudah dideploy dan dapat dicoba langsung secara interaktif:
 | **Kasir** | `kasir` | `kasir123` | Fokus meja kasir: Transaksi POS, Tahan Keranjang (<kbd>F2</kbd>), Riwayat Shift Saya, dan Rekap Tutup Kasir |
 
 > *Catatan: Data yang Anda input saat mencoba demo tersimpan secara lokal dan terisolasi di browser masing-masing (`localStorage`), sehingga aman dan tidak akan bercampur dengan pengunjung lain.*
+
+---
+
+## 📸 Tangkapan Layar Sistem Asli (Real Screenshots)
+
+Berikut adalah tangkapan layar asli yang diambil langsung dari sistem produksi [sobat-dagang.vercel.app](https://sobat-dagang.vercel.app/):
+
+### 1. 🛒 Terminal Kasir (POS) & Transaksi Cepat
+*Meja kasir dengan pencarian barcode instan, pemilihan kategori produk, keranjang belanja, kalkulasi uang pas (Quick Cash), dan cetak struk thermal.*
+![Terminal Kasir POS](./docs/screenshots/03-pos-terminal.png)
+
+<br />
+
+### 2. 📊 Dashboard Analitik Bisnis (Khusus Admin)
+*Ringkasan performa penjualan harian, total produk katalog, notifikasi barang perlu restok, dan grafik tren omzet pendapatan.*
+![Dashboard Analitik Bisnis](./docs/screenshots/02-dashboard-analytics.png)
+
+<br />
+
+### 3. 📦 Manajemen Inventori & Peringatan Stok
+*Katalog master data SKU, status stok otomatis (Aman, Menipis, Habis), penyesuaian stok langsung (+/-), dan ekspor data CSV.*
+![Inventori & Stok Barang](./docs/screenshots/04-inventori-stok.png)
+
+<br />
+
+### 4. 📈 Laporan Penjualan & Keuangan
+*Analitik keuangan mendalam, tren omzet harian, grafik distribusi penjualan per kategori, dan rekapitulasi data siap ekspor.*
+![Laporan Penjualan](./docs/screenshots/05-laporan-keuangan.png)
+
+<br />
+
+### 5. 👥 Manajemen Pengguna & Hak Akses (RBAC)
+*Pengelolaan akun kasir dan admin, pemantauan status aktif, dan reset password aman dengan enkripsi Web Crypto API.*
+![Manajemen Pengguna](./docs/screenshots/06-manajemen-pengguna.png)
+
+<br />
+
+### 6. 🔐 Halaman Login & Pemilih Akun Demo
+*Antarmuka autentikasi dengan tombol cepat Mode Demo untuk menguji peran Admin maupun Kasir dalam satu klik.*
+![Halaman Login](./docs/screenshots/01-login-screen.png)
 
 ---
 
@@ -178,6 +218,14 @@ Sobat-Dagang/
 ├── package.json                 # Daftar dependensi & script proyek
 ├── vite.config.ts               # Konfigurasi bundler Vite 6 & Tailwind CSS v4
 ├── tsconfig.json                # Konfigurasi compiler TypeScript
+├── docs/                        # Tangkapan layar asli (real screenshots) dari sistem produksi
+│   └── screenshots/
+│       ├── 01-login-screen.png        # Tangkapan layar login & mode demo
+│       ├── 02-dashboard-analytics.png # Tangkapan layar dashboard KPI & tren omzet
+│       ├── 03-pos-terminal.png        # Tangkapan layar meja kasir POS
+│       ├── 04-inventori-stok.png      # Tangkapan layar katalog stok barang
+│       ├── 05-laporan-keuangan.png    # Tangkapan layar laporan finansial
+│       └── 06-manajemen-pengguna.png  # Tangkapan layar manajemen akun & RBAC
 ├── src/
 │   ├── main.tsx                 # Bootstrapper React 19
 │   ├── App.tsx                  # State sentral, modul POS, keranjang, & pembayaran

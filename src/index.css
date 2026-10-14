@@ -1,36 +1,59 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Inter", sans-serif;
-  
-  --color-brand-50: #ecfdf5;
-  --color-brand-100: #d1fae5;
-  --color-brand-200: #a7f3d0;
-  --color-brand-300: #6ee7b7;
-  --color-brand-400: #34d399;
-  --color-brand-500: #10b981;
-  --color-brand-600: #059669;
-  --color-brand-700: #047857;
-  --color-brand-800: #065f46;
-  --color-brand-900: #064e3b;
+  --font-sans: 'DM Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'DM Sans', sans-serif;
 
-  --color-slate-50: #f8fafc;
-  --color-slate-100: #f1f5f9;
-  --color-slate-200: #e2e8f0;
-  --color-slate-300: #cbd5e1;
-  --color-slate-400: #94a3b8;
-  --color-slate-500: #64748b;
-  --color-slate-600: #475569;
-  --color-slate-700: #334155;
-  --color-slate-800: #1e293b;
-  --color-slate-900: #0f172a;
+  --color-bg: #F6F1E3;
+  --color-surface: #EAE4D3;
+  --color-ink: #111111;
+  --color-muted: #545454;
+
+  --color-pink: #F4B6D2;
+  --color-blue: #B7C7F2;
+  --color-yellow: #F5D76E;
+  --color-green: #8FA866;
+
+  --radius-card: 22px;
+
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 400ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root {
+  --color-bg: #F6F1E3;
+  --color-surface: #EAE4D3;
+  --color-ink: #111111;
+  --color-muted: #545454;
+  --color-pink: #F4B6D2;
+  --color-blue: #B7C7F2;
+  --color-yellow: #F5D76E;
+  --color-green: #8FA866;
+  --radius-card: 22px;
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 400ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @layer base {
   body {
-    @apply bg-slate-50 text-slate-800 font-sans;
+    background-color: #F6F1E3;
+    color: #111111;
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  
+  * {
+    border-color: rgba(17, 17, 17, 0.1);
+  }
+
+  :focus-visible {
+    outline: 2px solid #111111;
+    outline-offset: 2px;
   }
 }
 
@@ -41,20 +64,41 @@
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-transparent;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-gray-300 rounded-full hover:bg-gray-400;
+  background: #EAE4D3;
+  border-radius: 9999px;
 }
 
-/* Hide print elements unless printing */
+::-webkit-scrollbar-thumb:hover {
+  background: #d4ccb6;
+}
+
+/* Print elements */
 @media print {
+  body * {
+    visibility: hidden;
+  }
+  #receipt, #receipt *, #shift-summary-print, #shift-summary-print * {
+    visibility: visible;
+  }
+  #receipt, #shift-summary-print {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    max-width: 380px;
+    margin: 0 auto;
+    border: none !important;
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
+    padding: 16px !important;
+  }
   .no-print {
     display: none !important;
-  }
-  .print-only {
-    display: block !important;
   }
 }
 

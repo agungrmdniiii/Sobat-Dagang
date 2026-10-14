@@ -10,8 +10,24 @@ export enum Role {
 
 export interface User {
   id: string;
+  name?: string;
   username: string;
   role: Role;
+  isActive?: boolean;
+  mustChangePassword?: boolean;
+  lastLogin?: string;
+}
+
+export interface AppUser {
+  id: string;
+  name: string;
+  username: string;
+  role: Role;
+  isActive: boolean;
+  lastLogin?: string;
+  passwordHash: string;
+  mustChangePassword?: boolean;
+  createdAt: string;
 }
 
 export interface Product {
@@ -29,6 +45,16 @@ export interface Product {
 
 export interface CartItem extends Product {
   quantity: number;
+  notes?: string;
+  itemDiscount?: number;
+}
+
+export interface HeldCart {
+  id: string;
+  createdAt: string;
+  items: CartItem[];
+  total: number;
+  customerNote?: string;
 }
 
 export enum PaymentMethod {

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { Product, Role } from './types';
+import { Product, Role, AppUser } from './types';
 
 export const INITIAL_PRODUCTS: Product[] = [
   { id: '1', code: 'BRG001', name: 'Beras Premium 5kg', category: 'Beras', buyPrice: 65000, sellPrice: 75000, stock: 20, minStock: 5, unit: 'karung' },
@@ -30,4 +30,29 @@ export const CATEGORIES = [
 export const USERS = [
   { id: 'u1', username: 'admin', password: 'admin123', role: Role.ADMIN },
   { id: 'u2', username: 'kasir', password: 'kasir123', role: Role.KASIR },
+];
+
+export const INITIAL_APP_USERS: AppUser[] = [
+  {
+    id: 'u1',
+    name: 'Administrator Toko',
+    username: 'admin',
+    role: Role.ADMIN,
+    isActive: true,
+    lastLogin: '2026-10-13T07:15:00.000Z',
+    passwordHash: '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9', // admin123
+    mustChangePassword: false,
+    createdAt: '2026-01-01T00:00:00.000Z',
+  },
+  {
+    id: 'u2',
+    name: 'Budi Santoso (Kasir)',
+    username: 'kasir',
+    role: Role.KASIR,
+    isActive: true,
+    lastLogin: '2026-10-13T06:30:00.000Z',
+    passwordHash: 'f02b7c1e519e4fa436147f7e1399974f9510aa9c8e0cb8be29151eb540f9d214', // kasir123
+    mustChangePassword: false,
+    createdAt: '2026-01-05T00:00:00.000Z',
+  },
 ];

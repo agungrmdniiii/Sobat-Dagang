@@ -1,0 +1,301 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 680" width="100%" height="100%">
+  <defs>
+    <linearGradient id="windowBg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#020617" />
+    </linearGradient>
+
+    <linearGradient id="cardFill" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+
+    <linearGradient id="emeraldBtn" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+
+    <filter id="cardShadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <style>
+    .ui-text { font-family: ui-sans-serif, system-ui, -apple-system, sans-serif; }
+    .mono-text { font-family: ui-monospace, SFMono-Regular, monospace; }
+  </style>
+
+  <!-- Browser Window Wrapper -->
+  <rect width="1200" height="680" rx="16" fill="url(#windowBg)" stroke="#334155" stroke-width="1.5" />
+
+  <!-- Window Titlebar -->
+  <rect width="1200" height="42" rx="16" fill="#1e293b" />
+  <rect y="26" width="1200" height="16" fill="#1e293b" />
+  <circle cx="24" cy="21" r="6" fill="#ef4444" />
+  <circle cx="44" cy="21" r="6" fill="#f59e0b" />
+  <circle cx="64" cy="21" r="6" fill="#10b981" />
+  
+  <rect x="350" y="8" width="500" height="26" rx="6" fill="#0f172a" stroke="#334155" />
+  <text x="520" y="25" class="mono-text" font-size="11" fill="#94a3b8">https://sobatdagang.local:3000/pos</text>
+
+  <!-- ==================== SIDEBAR ==================== -->
+  <rect x="0" y="42" width="220" height="638" fill="#0f172a" stroke="#1e293b" stroke-width="1" />
+  
+  <!-- Logo -->
+  <g transform="translate(20, 65)">
+    <rect width="36" height="36" rx="8" fill="#10b981" />
+    <text x="9" y="24" font-size="20">🛒</text>
+    <text x="46" y="18" class="ui-text" font-size="15" font-weight="800" fill="#ffffff">SobatDagang</text>
+    <text x="46" y="32" class="mono-text" font-size="10" fill="#38bdf8">POS &amp; INVENTORY</text>
+  </g>
+
+  <!-- Nav Items -->
+  <g transform="translate(14, 130)">
+    <!-- Active Nav: POS -->
+    <rect width="192" height="40" rx="8" fill="#10b981" fill-opacity="0.15" stroke="#10b981" stroke-width="1" />
+    <text x="14" y="25" class="ui-text" font-size="13" font-weight="700" fill="#34d399">🛒 Kasir (POS)</text>
+    <rect x="145" y="12" width="36" height="16" rx="4" fill="#10b981" />
+    <text x="151" y="24" class="mono-text" font-size="9" font-weight="700" fill="#ffffff">LIVE</text>
+
+    <!-- Nav 2 -->
+    <text x="14" y="70" class="ui-text" font-size="13" fill="#94a3b8">📋 Riwayat Saya</text>
+    <!-- Nav 3 -->
+    <text x="14" y="115" class="ui-text" font-size="13" fill="#94a3b8">📊 Dashboard</text>
+    <!-- Nav 4 -->
+    <text x="14" y="160" class="ui-text" font-size="13" fill="#94a3b8">📦 Inventori &amp; Stok</text>
+    <!-- Nav 5 -->
+    <text x="14" y="205" class="ui-text" font-size="13" fill="#94a3b8">📈 Laporan Penjualan</text>
+    <!-- Nav 6 -->
+    <text x="14" y="250" class="ui-text" font-size="13" fill="#94a3b8">👥 Pengguna &amp; Hak Akses</text>
+  </g>
+
+  <!-- User Card Bottom -->
+  <g transform="translate(14, 600)">
+    <rect width="192" height="55" rx="8" fill="#1e293b" />
+    <circle cx="28" cy="28" r="16" fill="#3b82f6" />
+    <text x="21" y="33" class="ui-text" font-size="12" font-weight="700" fill="#ffffff">AD</text>
+    <text x="52" y="24" class="ui-text" font-size="12" font-weight="700" fill="#ffffff">Admin Toko</text>
+    <text x="52" y="38" class="mono-text" font-size="10" fill="#10b981">● SUPERADMIN</text>
+  </g>
+
+  <!-- ==================== MAIN POS CONTENT AREA ==================== -->
+  <g transform="translate(235, 52)">
+    
+    <!-- Top Search & Barcode Bar -->
+    <rect width="600" height="48" rx="10" fill="#1e293b" stroke="#334155" />
+    <text x="18" y="30" font-size="16">🔍</text>
+    <text x="46" y="29" class="ui-text" font-size="13" fill="#f8fafc">Beras Pandan Wangi 5kg</text>
+    <rect x="520" y="12" width="65" height="24" rx="4" fill="#0f172a" stroke="#475569" />
+    <text x="532" y="28" class="mono-text" font-size="11" fill="#38bdf8">SCAN [/]</text>
+
+    <!-- Category Chips -->
+    <g transform="translate(0, 60)">
+      <rect width="52" height="28" rx="6" fill="#10b981" />
+      <text x="14" y="18" class="ui-text" font-size="11" font-weight="700" fill="#ffffff">Semua</text>
+
+      <rect x="60" width="85" height="28" rx="6" fill="#1e293b" stroke="#334155" />
+      <text x="72" y="18" class="ui-text" font-size="11" fill="#cbd5e1">🌾 Sembako</text>
+
+      <rect x="153" width="85" height="28" rx="6" fill="#1e293b" stroke="#334155" />
+      <text x="165" y="18" class="ui-text" font-size="11" fill="#cbd5e1">🥤 Minuman</text>
+
+      <rect x="246" width="95" height="28" rx="6" fill="#1e293b" stroke="#334155" />
+      <text x="256" y="18" class="ui-text" font-size="11" fill="#cbd5e1">🍜 Mie &amp; Instan</text>
+
+      <rect x="349" width="85" height="28" rx="6" fill="#1e293b" stroke="#334155" />
+      <text x="360" y="18" class="ui-text" font-size="11" fill="#cbd5e1">🧂 Bumbu</text>
+    </g>
+
+    <!-- Product Grid (6 Cards Shown) -->
+    <g transform="translate(0, 105)">
+      <!-- Card 1 -->
+      <g transform="translate(0, 0)">
+        <rect width="190" height="195" rx="10" fill="url(#cardFill)" stroke="#334155" filter="url(#cardShadow)" />
+        <rect width="190" height="90" rx="10" fill="#334155" fill-opacity="0.4" />
+        <text x="75" y="55" font-size="32">🌾</text>
+        <text x="14" y="112" class="ui-text" font-size="12" font-weight="700" fill="#ffffff">Beras Pandan 5kg</text>
+        <text x="14" y="128" class="mono-text" font-size="10" fill="#94a3b8">SKU: BR-001</text>
+        <text x="14" y="152" class="ui-text" font-size="14" font-weight="800" fill="#34d399">Rp 74.500</text>
+        <rect x="14" y="162" width="60" height="18" rx="4" fill="#059669" fill-opacity="0.2" />
+        <text x="20" y="175" class="mono-text" font-size="9" fill="#6ee7b7">Stok: 42</text>
+        <circle cx="165" cy="165" r="14" fill="#10b981" />
+        <text x="160" y="170" class="ui-text" font-size="16" font-weight="700" fill="#ffffff">+</text>
+      </g>
+
+      <!-- Card 2 -->
+      <g transform="translate(205, 0)">
+        <rect width="190" height="195" rx="10" fill="url(#cardFill)" stroke="#334155" />
+        <rect width="190" height="90" rx="10" fill="#334155" fill-opacity="0.4" />
+        <text x="75" y="55" font-size="32">🌻</text>
+        <text x="14" y="112" class="ui-text" font-size="12" font-weight="700" fill="#ffffff">Minyak Goreng 2L</text>
+        <text x="14" y="128" class="mono-text" font-size="10" fill="#94a3b8">SKU: MY-002</text>
+        <text x="14" y="152" class="ui-text" font-size="14" font-weight="800" fill="#34d399">Rp 34.000</text>
+        <rect x="14" y="162" width="60" height="18" rx="4" fill="#059669" fill-opacity="0.2" />
+        <text x="20" y="175" class="mono-text" font-size="9" fill="#6ee7b7">Stok: 18</text>
+        <circle cx="165" cy="165" r="14" fill="#10b981" />
+        <text x="160" y="170" class="ui-text" font-size="16" font-weight="700" fill="#ffffff">+</text>
+      </g>
+
+      <!-- Card 3 -->
+      <g transform="translate(410, 0)">
+        <rect width="190" height="195" rx="10" fill="url(#cardFill)" stroke="#334155" />
+        <rect width="190" height="90" rx="10" fill="#334155" fill-opacity="0.4" />
+        <text x="75" y="55" font-size="32">🍬</text>
+        <text x="14" y="112" class="ui-text" font-size="12" font-weight="700" fill="#ffffff">Gula Pasir 1kg</text>
+        <text x="14" y="128" class="mono-text" font-size="10" fill="#94a3b8">SKU: GL-003</text>
+        <text x="14" y="152" class="ui-text" font-size="14" font-weight="800" fill="#34d399">Rp 17.500</text>
+        <rect x="14" y="162" width="75" height="18" rx="4" fill="#f59e0b" fill-opacity="0.2" />
+        <text x="19" y="175" class="mono-text" font-size="9" fill="#fde68a">Menipis: 4</text>
+        <circle cx="165" cy="165" r="14" fill="#10b981" />
+        <text x="160" y="170" class="ui-text" font-size="16" font-weight="700" fill="#ffffff">+</text>
+      </g>
+
+      <!-- Card 4 -->
+      <g transform="translate(0, 210)">
+        <rect width="190" height="195" rx="10" fill="url(#cardFill)" stroke="#334155" />
+        <rect width="190" height="90" rx="10" fill="#334155" fill-opacity="0.4" />
+        <text x="75" y="55" font-size="32">☕</text>
+        <text x="14" y="112" class="ui-text" font-size="12" font-weight="700" fill="#ffffff">Kopi Kapal Api 165g</text>
+        <text x="14" y="128" class="mono-text" font-size="10" fill="#94a3b8">SKU: KP-004</text>
+        <text x="14" y="152" class="ui-text" font-size="14" font-weight="800" fill="#34d399">Rp 14.500</text>
+        <rect x="14" y="162" width="60" height="18" rx="4" fill="#059669" fill-opacity="0.2" />
+        <text x="20" y="175" class="mono-text" font-size="9" fill="#6ee7b7">Stok: 50</text>
+        <circle cx="165" cy="165" r="14" fill="#10b981" />
+        <text x="160" y="170" class="ui-text" font-size="16" font-weight="700" fill="#ffffff">+</text>
+      </g>
+
+      <!-- Card 5 -->
+      <g transform="translate(205, 210)">
+        <rect width="190" height="195" rx="10" fill="url(#cardFill)" stroke="#334155" />
+        <rect width="190" height="90" rx="10" fill="#334155" fill-opacity="0.4" />
+        <text x="75" y="55" font-size="32">🍜</text>
+        <text x="14" y="112" class="ui-text" font-size="12" font-weight="700" fill="#ffffff">Indomie Goreng</text>
+        <text x="14" y="128" class="mono-text" font-size="10" fill="#94a3b8">SKU: IM-005</text>
+        <text x="14" y="152" class="ui-text" font-size="14" font-weight="800" fill="#34d399">Rp 3.500</text>
+        <rect x="14" y="162" width="60" height="18" rx="4" fill="#059669" fill-opacity="0.2" />
+        <text x="20" y="175" class="mono-text" font-size="9" fill="#6ee7b7">Stok: 120</text>
+        <circle cx="165" cy="165" r="14" fill="#10b981" />
+        <text x="160" y="170" class="ui-text" font-size="16" font-weight="700" fill="#ffffff">+</text>
+      </g>
+
+      <!-- Card 6 -->
+      <g transform="translate(410, 210)">
+        <rect width="190" height="195" rx="10" fill="url(#cardFill)" stroke="#334155" />
+        <rect width="190" height="90" rx="10" fill="#334155" fill-opacity="0.4" />
+        <text x="75" y="55" font-size="32">🥚</text>
+        <text x="14" y="112" class="ui-text" font-size="12" font-weight="700" fill="#ffffff">Telur Ayam 1kg</text>
+        <text x="14" y="128" class="mono-text" font-size="10" fill="#94a3b8">SKU: TL-006</text>
+        <text x="14" y="152" class="ui-text" font-size="14" font-weight="800" fill="#34d399">Rp 28.000</text>
+        <rect x="14" y="162" width="60" height="18" rx="4" fill="#059669" fill-opacity="0.2" />
+        <text x="20" y="175" class="mono-text" font-size="9" fill="#6ee7b7">Stok: 25</text>
+        <circle cx="165" cy="165" r="14" fill="#10b981" />
+        <text x="160" y="170" class="ui-text" font-size="16" font-weight="700" fill="#ffffff">+</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ==================== CART SIDEBAR (RIGHT COLUMN) ==================== -->
+  <g transform="translate(850, 42)">
+    <rect width="350" height="638" fill="#0b1329" stroke="#1e293b" stroke-width="1" />
+    
+    <!-- Cart Header -->
+    <g transform="translate(20, 20)">
+      <text x="0" y="20" class="ui-text" font-size="16" font-weight="800" fill="#ffffff">Keranjang Belanja</text>
+      <rect x="160" y="4" width="60" height="22" rx="4" fill="#1e293b" stroke="#334155" />
+      <text x="168" y="19" class="mono-text" font-size="10" fill="#f59e0b">HOLD [F2]</text>
+
+      <rect x="230" y="4" width="70" height="22" rx="4" fill="#ef4444" fill-opacity="0.15" stroke="#ef4444" stroke-opacity="0.3" />
+      <text x="242" y="19" class="ui-text" font-size="10" fill="#f87171">Kosongkan</text>
+    </g>
+
+    <!-- Cart Item 1 -->
+    <g transform="translate(18, 65)">
+      <rect width="314" height="65" rx="8" fill="#1e293b" stroke="#334155" />
+      <text x="14" y="24" class="ui-text" font-size="12" font-weight="700" fill="#ffffff">Beras Pandan 5kg</text>
+      <text x="14" y="44" class="mono-text" font-size="11" fill="#34d399">Rp 74.500</text>
+      
+      <!-- Stepper -->
+      <g transform="translate(200, 18)">
+        <rect width="28" height="28" rx="4" fill="#0f172a" stroke="#475569" />
+        <text x="10" y="18" class="ui-text" font-size="14" fill="#ffffff">-</text>
+        <text x="42" y="19" class="mono-text" font-size="12" font-weight="700" fill="#ffffff">1</text>
+        <rect x="66" width="28" height="28" rx="4" fill="#0f172a" stroke="#475569" />
+        <text x="75" y="19" class="ui-text" font-size="14" fill="#ffffff">+</text>
+      </g>
+    </g>
+
+    <!-- Cart Item 2 -->
+    <g transform="translate(18, 140)">
+      <rect width="314" height="65" rx="8" fill="#1e293b" stroke="#334155" />
+      <text x="14" y="24" class="ui-text" font-size="12" font-weight="700" fill="#ffffff">Minyak Goreng 2L</text>
+      <text x="14" y="44" class="mono-text" font-size="11" fill="#34d399">Rp 68.000</text>
+      
+      <!-- Stepper -->
+      <g transform="translate(200, 18)">
+        <rect width="28" height="28" rx="4" fill="#0f172a" stroke="#475569" />
+        <text x="10" y="18" class="ui-text" font-size="14" fill="#ffffff">-</text>
+        <text x="42" y="19" class="mono-text" font-size="12" font-weight="700" fill="#ffffff">2</text>
+        <rect x="66" width="28" height="28" rx="4" fill="#0f172a" stroke="#475569" />
+        <text x="75" y="19" class="ui-text" font-size="14" fill="#ffffff">+</text>
+      </g>
+    </g>
+
+    <!-- Cart Item 3 -->
+    <g transform="translate(18, 215)">
+      <rect width="314" height="65" rx="8" fill="#1e293b" stroke="#334155" />
+      <text x="14" y="24" class="ui-text" font-size="12" font-weight="700" fill="#ffffff">Indomie Goreng (x5)</text>
+      <text x="14" y="44" class="mono-text" font-size="11" fill="#34d399">Rp 17.500</text>
+      
+      <!-- Stepper -->
+      <g transform="translate(200, 18)">
+        <rect width="28" height="28" rx="4" fill="#0f172a" stroke="#475569" />
+        <text x="10" y="18" class="ui-text" font-size="14" fill="#ffffff">-</text>
+        <text x="42" y="19" class="mono-text" font-size="12" font-weight="700" fill="#ffffff">5</text>
+        <rect x="66" width="28" height="28" rx="4" fill="#0f172a" stroke="#475569" />
+        <text x="75" y="19" class="ui-text" font-size="14" fill="#ffffff">+</text>
+      </g>
+    </g>
+
+    <!-- Quick Cash Buttons Preview -->
+    <g transform="translate(18, 305)">
+      <text x="0" y="15" class="mono-text" font-size="11" fill="#94a3b8">PILIHAN UANG CEPAT (QUICK CASH):</text>
+      <rect y="25" width="98" height="30" rx="6" fill="#1e293b" stroke="#38bdf8" />
+      <text x="18" y="44" class="mono-text" font-size="11" font-weight="700" fill="#38bdf8">Uang Pas</text>
+
+      <rect x="108" y="25" width="98" height="30" rx="6" fill="#1e293b" stroke="#334155" />
+      <text x="124" y="44" class="mono-text" font-size="11" fill="#cbd5e1">160.000</text>
+
+      <rect x="216" y="25" width="98" height="30" rx="6" fill="#1e293b" stroke="#334155" />
+      <text x="232" y="44" class="mono-text" font-size="11" fill="#cbd5e1">200.000</text>
+    </g>
+
+    <!-- Summary Box -->
+    <g transform="translate(18, 395)">
+      <rect width="314" height="225" rx="12" fill="#1e293b" stroke="#334155" />
+      
+      <text x="16" y="28" class="ui-text" font-size="12" fill="#94a3b8">Subtotal (3 item)</text>
+      <text x="215" y="28" class="mono-text" font-size="12" fill="#ffffff">Rp 160.000</text>
+
+      <text x="16" y="52" class="ui-text" font-size="12" fill="#94a3b8">Diskon Toko</text>
+      <text x="250" y="52" class="mono-text" font-size="12" fill="#34d399">- Rp 0</text>
+
+      <line x1="16" y1="68" x2="298" y2="68" stroke="#334155" />
+
+      <text x="16" y="94" class="ui-text" font-size="13" font-weight="800" fill="#ffffff">TOTAL TAGIHAN</text>
+      <text x="165" y="96" class="ui-text" font-size="18" font-weight="900" fill="#10b981">Rp 160.000</text>
+
+      <!-- Pay Button -->
+      <rect x="16" y="118" width="282" height="46" rx="8" fill="url(#emeraldBtn)" />
+      <text x="80" y="146" class="ui-text" font-size="14" font-weight="800" fill="#ffffff">BAYAR (Ctrl + Enter)</text>
+
+      <!-- Method icons -->
+      <g transform="translate(65, 180)">
+        <rect width="80" height="24" rx="4" fill="#0f172a" stroke="#334155" />
+        <text x="15" y="16" class="mono-text" font-size="10" fill="#10b981">💵 TUNAI</text>
+        <rect x="90" width="80" height="24" rx="4" fill="#0f172a" stroke="#334155" />
+        <text x="105" y="16" class="mono-text" font-size="10" fill="#38bdf8">📱 QRIS</text>
+      </g>
+    </g>
+  </g>
+
+</svg>
